@@ -26,21 +26,21 @@ const Home = () => {
     }
 
     axios
-      .get('/movie/Explore?type=&country=Hong Kong&genre=')
+      .get('https://pheapyun.onrender.com/movie/Explore?type=&country=Hong Kong&genre=')
       .then((movies) => {
         setHK(movies.data.movies)
       })
       .catch((err) => console.log(err))
 
     axios
-      .get('/movie/Explore?type=&country=Cambodia&genre=')
+      .get('https://pheapyun.onrender.com/movie/Explore?type=&country=Cambodia&genre=')
       .then((movies) => {
         setMov(movies.data.movies)
       })
       .catch((err) => console.log(err))
 
     axios
-      .get('/movie/Explore?type=Anime&country=&genre=')
+      .get('https://pheapyun.onrender.com/movie/Explore?type=Anime&country=&genre=')
       .then((movies) => {
         setAnime(movies.data.movies)
       })

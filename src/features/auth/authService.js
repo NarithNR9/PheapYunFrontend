@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/user'
+const API_URL = 'https://pheapyun.onrender.com/user'
 
 // register
 const register = async (userData) => {

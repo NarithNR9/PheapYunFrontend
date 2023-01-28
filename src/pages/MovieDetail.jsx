@@ -115,7 +115,6 @@ const MovieDetail = () => {
 
             <div className=''>
               <h6>EPISODEs</h6>
-              <a href="mailto:test@example.com?subject=Testing out mailto!&body=This is only a test!">Second Example</a>
               {/* {movie.genre?.length} */}
               {movie.episodes?.map((key) => (
                 <button

@@ -44,7 +44,7 @@ const Explore = () => {
           item.click()
         }
       }
-      dispatch(getByFilter([typePara, countryPara, genrePara]))
+      // dispatch(getByFilter([typePara, countryPara, genrePara]))
       navigate('/Explore')
     } else {
       dispatch(getLatestMovies())
@@ -278,7 +278,7 @@ const Explore = () => {
           ))}
         </div>
       )}
-      {movies.length === 0 && (
+      {(movies.length === 0 && !isLoading) && (
         <div className='d-flex flex-column justify-content-center align-items-center mt-4'>
           <img
             src='https://res.cloudinary.com/dzh7xzbbz/image/upload/v1674801628/PheapYun/6134065_axavhw.png'

@@ -14,6 +14,7 @@ import Register from './pages/Register'
 import SearchPage from './pages/SearchPage'
 import MyProfile from './pages/MyProfile'
 import Explore from './pages/Explore'
+import { Navigate } from 'react-router-dom'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          <Route path='*' element={<Navigate to='/' />} />
           <Route path='/' element={<Home />} />
           <Route path='/add-movies' element={<AddMovies />} />
           <Route path='/movie/:movieId' element={<MovieDetail />} />

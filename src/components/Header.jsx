@@ -11,10 +11,12 @@ const Header = () => {
 
   if(window.location.pathname === '/Explore') {
     // document.getElementById('navType').click()
-    document.getElementById('navType').classList.add('hidden')
+    document.getElementById('navType')?.classList.add('hidden')
   } else {
     document.getElementById('navType')?.classList.remove('hidden')
   }
+
+  // console.log(user.imageUrl)
 
   const onLogout = () => {
     dispatch(logout())
@@ -104,7 +106,7 @@ const Header = () => {
               aria-label='Search'
             />
           </form>
-          {user ? (
+          {user !== null ? (
             <div className='dropdown ms-3 mb-1'>
               <a
                 className='dropdown-toggle d-flex align-items-center hidden-arrow'
@@ -114,7 +116,7 @@ const Header = () => {
                 data-mdb-toggle='dropdown'
                 aria-expanded='false'
               >
-                {user.imageUrl === null ? (
+                {!user.imageUrl ? (
                   <FaUserCircle color='white' size={'30px'} />
                 ) : (
                   <img
@@ -132,7 +134,7 @@ const Header = () => {
               >
                 <li>
                   <div className='d-flex mt-2 align-items-center justify-content-center fw-bold text-capitalize'>
-                  {user.imageUrl === null ? (
+                  {!user.imageUrl ? (
                   <FaUserCircle className='me-1 ' color='' size={'30px'} />
                 ) : (
                   <img

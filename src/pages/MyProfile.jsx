@@ -69,7 +69,7 @@ export default function MyProfile() {
                     borderBottomLeftRadius: '.5rem',
                   }}
                 >
-                  {user.imageUrl === null ? (
+                  {!user.imageUrl ? (
                     <MDBCardImage
                       src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp'
                       alt='Avatar'
