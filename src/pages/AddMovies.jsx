@@ -71,12 +71,11 @@ const AddMovies = () => {
     if (uploadSuccess) {
       formData.imageUrl = imgUrl
       // formData.description = description.replaceAll(`'`, `\\'`)
-      console.log(formData)
       dispatch(createMovie(formData))
     }
 
     dispatch(reset())
-  }, [isError, isSuccess])
+  }, [isError, isSuccess,uploadSuccess])
 
   const handleSubmit = (e) => {
     e.preventDefault()
