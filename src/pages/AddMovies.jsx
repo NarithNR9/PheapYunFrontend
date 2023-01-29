@@ -64,7 +64,7 @@ const AddMovies = () => {
 
     if (isSuccess) {
       dispatch(reset())
-      // toast.success(message)
+      toast.success(message)
       navigate('/')
     }
 
