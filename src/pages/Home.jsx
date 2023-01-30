@@ -24,7 +24,7 @@ const Home = () => {
     if (isSuccess) {
       dispatch(reset())
     }
-
+   
     axios
       .get('https://pheapyun.onrender.com/movie/Explore?type=&country=Hong Kong&genre=')
       .then((movies) => {

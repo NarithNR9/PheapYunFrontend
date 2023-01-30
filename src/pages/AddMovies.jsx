@@ -64,7 +64,7 @@ const AddMovies = () => {
 
     if (isSuccess) {
       dispatch(reset())
-      toast.success(message)
+      // toast.success(message)
       navigate('/')
     }
 
@@ -100,7 +100,7 @@ const AddMovies = () => {
       data.append('file', fileImage)
       data.append('upload_preset', 'pheapyunImg')
       data.append('cloud_name', 'dzh7xzbbz')
-      dispatch(uploadImg(data))
+      // dispatch(uploadImg(data))
     }
   }
 

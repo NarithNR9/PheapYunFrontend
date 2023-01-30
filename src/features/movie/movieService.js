@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'https://pheapyun.onrender.com/movie/'
+const API_URL = 'http://localhost:5000/movie/'
+const API_USER = 'http://localhost:5000/user/'
 const API_Cloudinary = 'https://api.cloudinary.com/v1_1/dzh7xzbbz/image/upload'
 
 // get latest movies
@@ -16,7 +17,7 @@ const createMovie = async (movieData) => {
 }
 
 // get by id
-const getById = async (movieId) => {
+const getById = async (movieId) => {  
   const response = await axios.get(API_URL + movieId)
   return response.data.movie
 }
@@ -25,6 +26,18 @@ const getById = async (movieId) => {
 const getByFilter = async (ref) => {
   const response = await axios.get(API_URL + 'Explore?type=' + ref[0] + '&country=' + ref[1] + '&genre=' + ref[2])
   return response.data.movies
+}
+
+// get fav movie
+const getFavourite = async (email) => {
+  const response = await axios.get(API_USER + 'favourite/' + email)
+  return response.data.favourite
+}
+
+// update fav movie
+const updateFavourite = async (favourite) => {
+  const response = await axios.post(API_USER + 'updateFavourite/', favourite)
+  return response.data.favourite
 }
 
 // update field by id
@@ -71,15 +84,16 @@ const deleteField = async (fieldId) => {
   return response.data.message
 }
 
-const ticketService = {
+const movieService = {
   getLatest,
   getByFilter,
   getById,
+  getFavourite,
+  updateFavourite,
   createMovie,
-  updateField,
   getFieldByType,
   deleteField,
   uploadImg
 }
 
-export default ticketService
+export default movieService

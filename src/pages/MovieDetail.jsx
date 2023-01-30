@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { MDBCollapse } from 'mdb-react-ui-kit'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getById, reset } from '../features/movie/movieSlice'
+import {
+  getById,
+  updateFavourite,
+  reset,
+  getFavourite,
+} from '../features/movie/movieSlice'
 import { toast } from 'react-toastify'
+import { FaHeart } from 'react-icons/fa'
 
 const MovieDetail = () => {
   const navigate = useNavigate()
@@ -14,17 +20,52 @@ const MovieDetail = () => {
 
   const [movieUrl, setMovieUrl] = useState(null)
 
-  const { movie, isLoading, isSuccess, isError, message } = useSelector(
-    (state) => state.Movies
-  )
+  const [fav, setFav] = useState(false)
+
+  const { movie, favourite, isLoading, isSuccess, isError, message } =
+    useSelector((state) => state.Movies)
+
+  const [favourites, setFavourites] = useState(favourite)
+
+  const { user } = useSelector((state) => state.auth)
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(reset())
     }
-
     dispatch(getById(movieId))
-  }, [movieId])
+    dispatch(getFavourite(user.email))
+  }, [movieId, user.email])
+
+  useEffect(() => {
+    // Run! once
+    if (Array.isArray(favourite)) {
+      setFav(favourite?.some((ele) => ele._id === movieId))
+    }
+    setFavourites(favourite)
+  }, [favourite, isSuccess])
+
+  const addToFav = () => {
+    const favo = favourites.map((ele) => {
+      return { movieId: ele._id }
+    })
+    favo.push({ movieId: movieId })
+    const data = { email: user.email, favourite: favo }
+    setFav(true)
+    dispatch(updateFavourite(data))
+    toast.success('Added to favourite.')
+  }
+
+  const removeFav = () => {
+    const favoo = favourites.map((ele) => {
+      return { movieId: ele._id }
+    })
+    const favo = favoo.filter((ele) => ele.movieId !== movieId)
+    const data = { email: user.email, favourite: favo }
+    dispatch(updateFavourite(data))
+    toast.success('Removed from favourite.')
+    setFav(false)
+  }
 
   return (
     <div className=' bg-dark'>
@@ -55,14 +96,19 @@ const MovieDetail = () => {
             <span className=' ps-3'>{movie.genre?.join(' ')}</span>
             <div className='d-flex justify-content-between p-3'>
               <div className='d-flex flex-column align-items-center'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 512 512'
-                  fill='#FFFFFF'
-                  width={'25px'}
-                >
-                  <path d='M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z' />
-                </svg>
+                {fav ? (
+                  <FaHeart onClick={removeFav} size={'25px'} />
+                ) : (
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    onClick={addToFav}
+                    viewBox='0 0 512 512'
+                    fill='#FFFFFF'
+                    width={'25px'}
+                  >
+                    <path d='M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z' />
+                  </svg>
+                )}
                 Favourite
               </div>
 
@@ -83,7 +129,14 @@ const MovieDetail = () => {
               </div>
 
               <div className='d-flex flex-column align-items-center'>
-                <a href = {'mailto:2820.seng.sonarith@rupp.edu.kh?subject=Report problem &body=Movie Name: ' + movie.title + ' Link: ' + window.location.href}>
+                <a
+                  href={
+                    'mailto:2820.seng.sonarith@rupp.edu.kh?subject=Report problem &body=Movie Name: ' +
+                    movie.title +
+                    ' Link: ' +
+                    window.location.href
+                  }
+                >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 512 512'

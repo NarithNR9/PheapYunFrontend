@@ -15,6 +15,7 @@ import SearchPage from './pages/SearchPage'
 import MyProfile from './pages/MyProfile'
 import Explore from './pages/Explore'
 import { Navigate } from 'react-router-dom'
+import EditMovie from './pages/EditMovie'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='*' element={<Navigate to='/' />} />
           <Route path='/' element={<Home />} />
           <Route path='/add-movies' element={<AddMovies />} />
+          <Route path='/edit-movie/:movieId' element={<EditMovie />} />
           <Route path='/movie/:movieId' element={<MovieDetail />} />
           <Route path='/favourite' element={<MyFavourite />} />
           <Route path='/login' element={<Login />} />

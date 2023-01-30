@@ -41,7 +41,7 @@ const SlickSection = ({ title, moviesProp,url }) => {
     infinite: true,
     speed: 500,
     slidesToShow: moviesProp.length >= 4 ? 4 : moviesProp.length,
-    slidesToScroll: 3,
+    slidesToScroll: 4,
     // slidecount: 3,
     arrows: true,
     prevArrow: <Left />,
@@ -52,7 +52,7 @@ const SlickSection = ({ title, moviesProp,url }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: moviesProp.length >= 3 ? 3 : moviesProp.length,
-          slidesToScroll: 2,
+          slidesToScroll: 3,
           infinite: true,
           dots: true,
         },

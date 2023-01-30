@@ -24,32 +24,39 @@ const Explore = () => {
     (state) => state.Movies
   )
 
+  const { user } = useSelector((state) => state.auth)
+
   let [filter, setFilter] = useState(['', '', ''])
 
-  useEffect((e) => {
-    if (isSuccess) {
-      dispatch(reset())
-    }
-
-    const query = new URLSearchParams(location.search)
-    const typePara = query.get('type')
-    const countryPara = query.get('country')
-    const genrePara = query.get('genre')
-
-    if (typePara || countryPara || genrePara) {
-      // remove and add selected btn
-      for (let item of document.getElementsByClassName('btn-outline-primary')) {
-        if ([typePara, countryPara, genrePara].includes(item.innerHTML)) {
-          // when query match that btn => click
-          item.click()
-        }
+  useEffect(
+    (e) => {
+      if (isSuccess) {
+        dispatch(reset())
       }
-      // dispatch(getByFilter([typePara, countryPara, genrePara]))
-      navigate('/Explore')
-    } else {
-      dispatch(getLatestMovies())
-    }
-  }, [navigate])
+
+      const query = new URLSearchParams(location.search)
+      const typePara = query.get('type')
+      const countryPara = query.get('country')
+      const genrePara = query.get('genre')
+
+      if (typePara || countryPara || genrePara) {
+        // remove and add selected btn
+        for (let item of document.getElementsByClassName(
+          'btn-outline-primary'
+        )) {
+          if ([typePara, countryPara, genrePara].includes(item.innerHTML)) {
+            // when query match that btn => click
+            item.click()
+          }
+        }
+        // dispatch(getByFilter([typePara, countryPara, genrePara]))
+        navigate('/Explore')
+      } else {
+        dispatch(getLatestMovies())
+      }
+    },
+    [navigate]
+  )
 
   const handleClick = (e) => {
     if (e.target.parentNode.id === 'type') {
@@ -270,15 +277,27 @@ const Explore = () => {
         <Loading />
       ) : (
         <div className='row'>
-          {/* {movies ?}s */}
           {movies.map((key) => (
-            <Link key={key._id} to={'/movie/'+key._id} className='my-3 col-6 col-md-4 col-lg-3'>
-              <MovieCard movieProp={key} />
-            </Link>
+            <div key={key._id} className='my-3 col-6 col-md-4 col-lg-3'>
+              <Link to={'/movie/' + key._id}>
+                <MovieCard movieProp={key} />
+              </Link>
+              {user.isAdmin && (
+                <div className='d-flex justify-content-end'>
+                  <Link
+                    to={'/edit-movie/' + key._id}
+                    style={{ marginTop: '-28px', zIndex: '100' }}
+                    className='btn btn-warning p-1 me-2'
+                  >
+                    Edit
+                  </Link>
+                </div>
+              )}
+            </div>
           ))}
         </div>
       )}
-      {(movies.length === 0 && !isLoading) && (
+      {movies.length === 0 && !isLoading && (
         <div className='d-flex flex-column justify-content-center align-items-center mt-4'>
           <img
             src='https://res.cloudinary.com/dzh7xzbbz/image/upload/v1674801628/PheapYun/6134065_axavhw.png'

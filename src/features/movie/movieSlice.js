@@ -4,6 +4,7 @@ import movieService from './movieService'
 const initialState = {
   movies: [],
   movie: {},
+  favourite: [],
   imgUrl: null,
   uploadSuccess: false,
   movieSuccess: false,
@@ -33,7 +34,7 @@ export const getLatestMovies = createAsyncThunk(
 )
 
 
-// get a single field
+// get a single movie
 export const getById = createAsyncThunk(
   'movies/getById',
   async (movieId, thunkAPI) => {
@@ -52,12 +53,50 @@ export const getById = createAsyncThunk(
   }
 )
 
-// get a single field
+// get by filter
 export const getByFilter = createAsyncThunk(
   'movies/getByFilter',
   async (ref, thunkAPI) => {
     try {
       return await movieService.getByFilter(ref)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// get favourite movies
+export const getFavourite = createAsyncThunk(
+  'movies/getFavourite',
+  async (email, thunkAPI) => {
+    try {
+      return await movieService.getFavourite(email)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// get favourite movies
+export const updateFavourite = createAsyncThunk(
+  'movies/updateFavourite',
+  async (favourite, thunkAPI) => {
+    try {
+      return await movieService.updateFavourite(favourite)
     } catch (error) {
       const message =
         (error.response &&
@@ -271,7 +310,33 @@ export const movieSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(getFavourite.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getFavourite.fulfilled, (state, action) => {
+        state.isSuccess = true
+        state.isLoading = false
+        state.favourite = action.payload
+      })
+      .addCase(getFavourite.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(getFieldByType.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateFavourite.fulfilled, (state, action) => {
+        state.isSuccess = true
+        state.isLoading = false
+        state.favourite = action.payload
+      })
+      .addCase(updateFavourite.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateFavourite.pending, (state) => {
         state.isLoading = true
       })
       .addCase(getFieldByType.fulfilled, (state, action) => {
