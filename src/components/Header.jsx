@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,16 +7,23 @@ import { logout, reset } from '../features/auth/authSlice'
 const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
+  const { user, isAdmin } = useSelector((state) => state.auth)
 
-  if(window.location.pathname === '/Explore') {
+  const { searchName, setSearchName } = useState('')
+
+  if (window.location.pathname === '/Explore') {
     // document.getElementById('navType').click()
     document.getElementById('navType')?.classList.add('hidden')
   } else {
     document.getElementById('navType')?.classList.remove('hidden')
   }
 
-  // console.log(user.imageUrl)
+  const search = (e) => {
+    e.preventDefault()
+    if (document.getElementById('search').value !== '') {
+      navigate('/search/' + document.getElementById('search').value)
+    }
+  }
 
   const onLogout = () => {
     dispatch(logout())
@@ -48,19 +55,21 @@ const Header = () => {
         <div className='collapse navbar-collapse ' id='navbarSupportedContent'>
           <ul className='navbar-nav me-auto mb-2 mb-lg-0 '>
             <li className='nav-item'>
-              <a
+              <Link
                 className='nav-link active text-light'
                 aria-current='page'
-                href='#a'
+                to='/'
               >
                 Home
-              </a>
-            </li>
-            <li className='nav-item'>
-              <Link className='nav-link text-light' to='/add-movies'>
-                Add
               </Link>
             </li>
+            {isAdmin && (
+              <li className='nav-item'>
+                <Link className='nav-link text-light' to='/add-movies'>
+                  Add
+                </Link>
+              </li>
+            )}
             <li id='navType' className='nav-item dropdown'>
               <a
                 className=' nav-link text-white dropdown-toggle'
@@ -73,17 +82,26 @@ const Header = () => {
               </a>
               <ul className='dropdown-menu'>
                 <li>
-                  <Link className='dropdown-item' to='/Explore?type=Movie&country=&genre='>
+                  <Link
+                    className='dropdown-item'
+                    to='/Explore?type=Movie&country=&genre='
+                  >
                     Movie
                   </Link>
                 </li>
                 <li>
-                  <Link className='dropdown-item' to='/Explore?type=Series&country=&genre='>
+                  <Link
+                    className='dropdown-item'
+                    to='/Explore?type=Series&country=&genre='
+                  >
                     Series
                   </Link>
                 </li>
                 <li>
-                  <Link className='dropdown-item' to='/Explore?type=Anime&country=&genre='>
+                  <Link
+                    className='dropdown-item'
+                    to='/Explore?type=Anime&country=&genre='
+                  >
                     Anime
                   </Link>
                 </li>
@@ -95,11 +113,10 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-          <form className='d-flex' role='search'>
-            <Link to='/search'>
-              <FaSearch className='mt-1 me-1' color='white' size={'30px'} />
-            </Link>
+          <form onSubmit={search} className='d-flex' role='search'>
+              <FaSearch onClick={search} className='mt-1 me-1 hover' color='white' size={'30px'} />
             <input
+              id='search'
               className='form-control me-2'
               type='search'
               placeholder='Search'
@@ -134,17 +151,17 @@ const Header = () => {
               >
                 <li>
                   <div className='d-flex mt-2 align-items-center justify-content-center fw-bold text-capitalize'>
-                  {!user.imageUrl ? (
-                  <FaUserCircle className='me-1 ' color='' size={'30px'} />
-                ) : (
-                  <img
-                    src={user.imageUrl}
-                    className='rounded-circle me-1'
-                    height='45'
-                    alt='Profile'
-                    loading='lazy'
-                  />
-                )}
+                    {!user.imageUrl ? (
+                      <FaUserCircle className='me-1 ' color='' size={'30px'} />
+                    ) : (
+                      <img
+                        src={user.imageUrl}
+                        className='rounded-circle me-1'
+                        height='45'
+                        alt='Profile'
+                        loading='lazy'
+                      />
+                    )}
                     {user.username}
                   </div>
                 </li>

@@ -16,6 +16,7 @@ import MyProfile from './pages/MyProfile'
 import Explore from './pages/Explore'
 import { Navigate } from 'react-router-dom'
 import EditMovie from './pages/EditMovie'
+import PrivateRoutes from './components/PrivateRoutes'
 
 function App() {
   return (
@@ -25,15 +26,17 @@ function App() {
         <Routes>
           <Route path='*' element={<Navigate to='/' />} />
           <Route path='/' element={<Home />} />
-          <Route path='/add-movies' element={<AddMovies />} />
-          <Route path='/edit-movie/:movieId' element={<EditMovie />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path='/add-movies' element={<AddMovies />} />
+            <Route path='/edit-movie/:movieId' element={<EditMovie />} />
+          </Route>
           <Route path='/movie/:movieId' element={<MovieDetail />} />
           <Route path='/favourite' element={<MyFavourite />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/search' element={<SearchPage />} />
+          <Route path='/search/:name' element={<SearchPage />} />
           <Route path='/myProfile' element={<MyProfile />} />
-          <Route path='/Explore' element={<Explore />} /> 
+          <Route path='/Explore' element={<Explore />} />
         </Routes>
         <Footer />
       </Router>

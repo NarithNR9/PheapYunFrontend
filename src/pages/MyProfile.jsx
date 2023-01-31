@@ -129,7 +129,7 @@ export default function MyProfile() {
                     <MDBRow className='pt-1'>
                       <MDBCol size='6' className='mb-3'>
                         <MDBTypography tag='h6'>Favourite Movies</MDBTypography>
-                        <MDBCardText className='text-muted'>12</MDBCardText>
+                        <MDBCardText className='text-muted'>{user?.favourite?.length}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
 

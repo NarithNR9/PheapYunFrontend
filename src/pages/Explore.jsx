@@ -24,9 +24,9 @@ const Explore = () => {
     (state) => state.Movies
   )
 
-  const { user } = useSelector((state) => state.auth)
+  const { isAdmin } = useSelector((state) => state.auth)
 
-  let [filter, setFilter] = useState(['', '', ''])
+  let [filter, setFilter] = useState(['', '', '', ''])
 
   useEffect(
     (e) => {
@@ -282,7 +282,7 @@ const Explore = () => {
               <Link to={'/movie/' + key._id}>
                 <MovieCard movieProp={key} />
               </Link>
-              {user.isAdmin && (
+              {isAdmin && (
                 <div className='d-flex justify-content-end'>
                   <Link
                     to={'/edit-movie/' + key._id}

@@ -2,11 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
 
 const user = JSON.parse(localStorage.getItem('user'))
-// const owner = JSON.parse(localStorage.getItem('owner'))
+
+// let admin
+// if (user) {
+//   admin = axios.get('http://localhost:5000/user/' + user._id)
+// }
 
 const initialState = {
   user: user ? user : null,
-  // owner: owner ? owner : null,
+  isAdmin: false,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -33,23 +37,18 @@ export const register = createAsyncThunk(
 )
 
 // login user
-export const login = createAsyncThunk(
-  'user/login',
-  async (user, thunkAPI) => {
-    try {
-      return await authService.login(user)
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+export const login = createAsyncThunk('user/login', async (user, thunkAPI) => {
+  try {
+    return await authService.login(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
 
-      return thunkAPI.rejectWithValue(message)
-    }
+    return thunkAPI.rejectWithValue(message)
   }
-)
+})
 
 // google login
 export const googleLogin = createAsyncThunk(
@@ -69,7 +68,6 @@ export const googleLogin = createAsyncThunk(
     }
   }
 )
-
 
 // login user
 export const update = createAsyncThunk(
@@ -96,7 +94,6 @@ export const logout = createAsyncThunk('user/logout', async () => {
 })
 
 // --------------------------------------------------------------------------------------------------------- //
-
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -132,6 +129,7 @@ export const authSlice = createSlice({
         state.isSuccess = true
         state.message = action.payload.message
         state.user = action.payload
+        state.isAdmin = action.payload.isAdmin ? true : false
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
@@ -144,6 +142,7 @@ export const authSlice = createSlice({
         state.isSuccess = true
         state.message = action.payload.message
         state.user = action.payload
+        state.isAdmin = action.payload.isAdmin ? true : false
       })
       .addCase(googleLogin.rejected, (state, action) => {
         state.isLoading = false

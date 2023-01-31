@@ -24,7 +24,7 @@ const getById = async (movieId) => {
 
 // get by filter
 const getByFilter = async (ref) => {
-  const response = await axios.get(API_URL + 'Explore?type=' + ref[0] + '&country=' + ref[1] + '&genre=' + ref[2])
+  const response = await axios.get(API_URL + 'Explore?type=' + ref[0] + '&country=' + ref[1] + '&genre=' + ref[2] + '&title=' + ref[3])
   return response.data.movies
 }
 
