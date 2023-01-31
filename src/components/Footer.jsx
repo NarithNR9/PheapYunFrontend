@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -13,12 +14,11 @@ const Footer = () => {
           {/* Section: CTA */}
           <section>
             <p className='d-flex justify-content-center align-items-center'>
-              <span className='me-3'>Enjoy The Movies</span>
               <button
                 type='button'
                 className='btn btn-outline-light btn-rounded'
               >
-                Sign up!
+                Enjoy The Movies!
               </button>
             </p>
           </section>
@@ -31,9 +31,9 @@ const Footer = () => {
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         >
           © 2023 Copyright:
-          <a className='text-white' href='https://mdbootstrap.com/'>
-            PheapYun.com
-          </a>
+          <Link className='text-white' to='/'>
+          &nbsp; pheapyun.netlify.app
+          </Link>
         </div>
         {/* Copyright */}
       </footer>

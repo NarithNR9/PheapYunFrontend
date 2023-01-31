@@ -51,7 +51,7 @@ const Home = () => {
 
   return (
     <div style={{ backgroundColor: '#f4f5f7' }}>
-      {/* <Slider /> */}
+      <Slider moviesProp={movies}/>
       <SlickSection title='Latest Update' url='/Explore' moviesProp={movies} />
       <SlickSection title='Khmer' url='/Explore?type=&country=Cambodia&genre=&title=' moviesProp={mvkhmer} />
       <SlickSection title='Hong Kong' url='/Explore?type=&country=Hong Kong&genre=&title=' moviesProp={hongkong} />
