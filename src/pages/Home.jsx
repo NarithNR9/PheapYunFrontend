@@ -35,7 +35,7 @@ const Home = () => {
 
     if (user) {
       axios
-        .get('https://pheapyun.onrender.com/favourite/' + user.email)
+        .get('https://pheapyun.onrender.com/user/favourite/' + user.email)
         .then((movies) => {
           setFavourite(movies.data.favourite)
         })
