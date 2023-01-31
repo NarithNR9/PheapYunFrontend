@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { FaTrash } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -44,6 +45,10 @@ const MyFavourite = () => {
     setMovies(items)
   }
 
+  const handleRemove = (e) => {
+    setMovies(movies.filter((movie) => movie._id !== e.target.parentNode.id))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const favo = movies.map((ele) => {
@@ -76,6 +81,7 @@ const MyFavourite = () => {
               <th scope='col'>Image</th>
               <th scope='col'>Title</th>
               <th scope='col'>Episodes</th>
+              <th scope='col'>Remove</th>
             </tr>
           </thead>
 
@@ -91,8 +97,8 @@ const MyFavourite = () => {
                     movies?.map((movie, index) => {
                       return (
                         <Draggable
-                          key={movie._id}
-                          draggableId={movie._id}
+                          key={movie?._id}
+                          draggableId={movie?._id}
                           index={index}
                         >
                           {(provided) => (
@@ -106,7 +112,7 @@ const MyFavourite = () => {
                                 {index + 1}
                               </th>
                               <td>
-                                <Link to={'/movie/' + movie._id}>
+                                <Link to={'/movie/' + movie?._id}>
                                   <img
                                     src={movie?.imageUrl}
                                     alt='img'
@@ -114,8 +120,19 @@ const MyFavourite = () => {
                                   />
                                 </Link>
                               </td>
-                              <td style={{ fontFamily: 'Khmer OS Siemreap'}}>{movie?.title}</td>
+                              <td style={{ fontFamily: 'Khmer OS Siemreap' }}>
+                                {movie?.title}
+                              </td>
                               <td>{movie?.episodes?.length}</td>
+                              <td>
+                                <FaTrash
+                                  className='noHover'
+                                  id={movie._id}
+                                  onClick={handleRemove}
+                                  fill='#e60016'
+                                  size='20px'
+                                />
+                              </td>
                             </tr>
                           )}
                         </Draggable>

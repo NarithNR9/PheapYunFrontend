@@ -119,6 +119,9 @@
   display: none;
 }
 
+.noHover:hover {
+  cursor: default;
+}
 
 .portrait-crop img{
   width: 100%;

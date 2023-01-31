@@ -34,8 +34,10 @@ const MovieDetail = () => {
       dispatch(reset())
     }
     dispatch(getById(movieId))
-    dispatch(getFavourite(user.email))
-  }, [movieId, user.email])
+    if (user) {
+      dispatch(getFavourite(user?.email))
+    }
+  }, [movieId, user?.email])
 
   useEffect(() => {
     // Run! once
@@ -46,14 +48,18 @@ const MovieDetail = () => {
   }, [favourite, isSuccess])
 
   const addToFav = () => {
-    const favo = favourites.map((ele) => {
-      return { movieId: ele._id }
-    })
-    favo.push({ movieId: movieId })
-    const data = { email: user.email, favourite: favo }
-    setFav(true)
-    dispatch(updateFavourite(data))
-    toast.success('Added to favourite.')
+    if (user) {
+      const favo = favourites.map((ele) => {
+        return { movieId: ele._id }
+      })
+      favo.push({ movieId: movieId })
+      const data = { email: user.email, favourite: favo }
+      setFav(true)
+      dispatch(updateFavourite(data))
+      toast.success('Added to favourite.')
+    } else {
+      toast.warning('Please log in to use this feature.')
+    }
   }
 
   const removeFav = () => {
@@ -85,7 +91,12 @@ const MovieDetail = () => {
         </div>
         <div className='col-md-4 text-light'>
           <div className='card-body'>
-            <h4 style={{fontFamily: 'Khmer OS Siemreap'}} className='card-title'>{movie.title}</h4>
+            <h4
+              style={{ fontFamily: 'Khmer OS Siemreap' }}
+              className='card-title'
+            >
+              {movie.title}
+            </h4>
             <h6
               style={{ fontWeight: '300', fontSize: '0.9rem', opacity: '0.7' }}
             >

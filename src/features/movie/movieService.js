@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5000/movie/'
-const API_USER = 'http://localhost:5000/user/'
+const API_URL = 'https://pheapyun.onrender.com/movie/'
+const API_USER = 'https://pheapyun.onrender.com/user/'
 const API_Cloudinary = 'https://api.cloudinary.com/v1_1/dzh7xzbbz/image/upload'
 
 // get latest movies

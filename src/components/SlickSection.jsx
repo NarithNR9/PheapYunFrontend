@@ -90,7 +90,7 @@ const SlickSection = ({ title, moviesProp,url }) => {
         <Loading size='150px' />
       ) : (
         <Slider {...setting}>
-          {moviesProp.map((movie, key) => (
+          {moviesProp.slice(0,10).map((movie, key) => (
             <Link key={movie._id} to={'movie/' + movie._id}>
               <MovieCard movieProp={movie} />
             </Link>
