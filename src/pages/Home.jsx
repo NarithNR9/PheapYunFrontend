@@ -44,7 +44,7 @@ const Home = () => {
 
     axios
       .get(
-        'https://pheapyun.onrender.com/Explore?type=&country=Hong Kong&genre=&title='
+        'https://pheapyun.onrender.com/movie/Explore?type=&country=Hong Kong&genre=&title='
       )
       .then((movies) => {
         setHK(movies.data.movies)
