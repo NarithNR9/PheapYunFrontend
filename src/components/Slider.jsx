@@ -43,7 +43,7 @@ const Slider = ({ moviesProp }) => {
               </Link>
               <div className='carousel-caption d-flex justify-content-center'>
                 <h5
-                  style={{ backgroundColor: 'rgba(60, 60, 60, .75)' }}
+                  style={{ backgroundColor: 'rgba(60, 60, 60, .75)',fontFamily: 'Khmer OS Siemreap' }}
                   className='py-1 px-4'
                 >
                   {movie.title}

@@ -85,7 +85,7 @@ const MovieDetail = () => {
         </div>
         <div className='col-md-4 text-light'>
           <div className='card-body'>
-            <h4 className='card-title'>{movie.title}</h4>
+            <h4 style={{fontFamily: 'Khmer OS Siemreap'}} className='card-title'>{movie.title}</h4>
             <h6
               style={{ fontWeight: '300', fontSize: '0.9rem', opacity: '0.7' }}
             >
@@ -167,7 +167,7 @@ const MovieDetail = () => {
             </div>
 
             <div className=''>
-              <h6>EPISODEs</h6>
+              <h6>EPISODES</h6>
               {/* {movie.genre?.length} */}
               {movie.episodes?.map((key) => (
                 <button

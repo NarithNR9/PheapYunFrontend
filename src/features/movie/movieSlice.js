@@ -73,7 +73,7 @@ export const getByFilter = createAsyncThunk(
 )
 
 // get favourite movies
-export const getFavourite = createAsyncThunk(
+export const  getFavourite = createAsyncThunk(
   'movies/getFavourite',
   async (email, thunkAPI) => {
     try {

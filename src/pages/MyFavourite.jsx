@@ -114,7 +114,7 @@ const MyFavourite = () => {
                                   />
                                 </Link>
                               </td>
-                              <td>{movie?.title}</td>
+                              <td style={{ fontFamily: 'Khmer OS Siemreap'}}>{movie?.title}</td>
                               <td>{movie?.episodes?.length}</td>
                             </tr>
                           )}

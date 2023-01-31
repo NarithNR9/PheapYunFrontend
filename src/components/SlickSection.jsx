@@ -38,9 +38,10 @@ const SlickSection = ({ title, moviesProp,url }) => {
 
   const setting = {
     dots: true,
-    infinite: true,
+    infinite: moviesProp.length >= 4 ? true : false,
     speed: 500,
-    slidesToShow: moviesProp.length >= 4 ? 4 : moviesProp.length,
+    swipeToSlide: true,
+    slidesToShow: 4,
     slidesToScroll: 4,
     // slidecount: 3,
     arrows: true,
