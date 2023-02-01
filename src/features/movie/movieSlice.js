@@ -129,6 +129,25 @@ export const createMovie = createAsyncThunk(
   }
 )
 
+// create new movie
+export const updateMovie = createAsyncThunk(
+  'movies/update',
+  async (movieData, thunkAPI) => {
+    try {
+      return await movieService.updateMovie(movieData)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 // update movie
 export const updateField = createAsyncThunk(
   'field/updateField',
@@ -259,6 +278,19 @@ export const movieSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(updateMovie.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateMovie.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.message = action.payload
+      })
+      .addCase(updateMovie.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(updateField.pending, (state) => {
         state.isLoading = true
       })
@@ -288,7 +320,6 @@ export const movieSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getById.fulfilled, (state, action) => {
-        state.isSuccess = true
         state.isLoading = false
         state.movie = action.payload
       })

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://pheapyun.onrender.com/movie/'
+const API_URL = 'http://localhost:5000/movie/'
 const API_USER = 'https://pheapyun.onrender.com/user/'
 const API_Cloudinary = 'https://api.cloudinary.com/v1_1/dzh7xzbbz/image/upload'
 
@@ -15,6 +15,13 @@ const createMovie = async (movieData) => {
   const response = await axios.post(API_URL, movieData)
   return response.data
 }
+
+// create new field
+const updateMovie = async (movieData) => {
+  const response = await axios.post(API_URL + 'edit', movieData)
+  return response.data
+}
+
 
 // get by id
 const getById = async (movieId) => {  
@@ -91,6 +98,7 @@ const movieService = {
   getFavourite,
   updateFavourite,
   createMovie,
+  updateMovie,
   getFieldByType,
   deleteField,
   uploadImg

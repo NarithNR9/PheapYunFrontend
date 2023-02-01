@@ -1,12 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
 
-const user = JSON.parse(localStorage.getItem('user'))
-
-// let admin
-// if (user) {
-//   admin = axios.get('http://localhost:5000/user/' + user._id)
-// }
+const user = JSON.parse(localStorage.getItem('user')) 
 
 const initialState = {
   user: user ? user : null,

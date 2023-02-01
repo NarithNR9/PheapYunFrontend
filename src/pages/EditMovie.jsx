@@ -16,6 +16,7 @@ import {
   reset,
   createMovie,
   getById,
+  updateMovie,
 } from '../features/movie/movieSlice'
 import Loading from '../components/Loading'
 
@@ -36,6 +37,7 @@ const EditMovie = () => {
   } = useSelector((state) => state.Movies)
 
   const [formData, setFormData] = useState({
+    _id: '',
     title: '',
     type: '',
     country: '',
@@ -88,68 +90,38 @@ const EditMovie = () => {
     //   navigate('/')
     // }
 
-    if (uploadSuccess) {
-      formData.imageUrl = imgUrl
-      // formData.description = description.replaceAll(`'`, `\\'`)
-      dispatch(createMovie(formData))
-    }
-
     // dispatch(reset())
   }, [isError, isSuccess, uploadSuccess])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (title === '' && !image) {
+    if (title === '') {
       return toast.warning("You haven't updated anything yet")
     }
 
-    // if user change the image
-    if (image) {
-      /// upload image to cloudbinary and get data back
-      const data = new FormData()
-      data.append('file', fileImage)
-      data.append('upload_preset', 'fieldImg')
-      data.append('cloud_name', 'dzh7xzbbz')
-      dispatch(uploadImg(data))
-    } else {
-      // push genre
-      ref.current.getSelectedItems().forEach((element) => {
-        formData.genre.push(element.name)
-      })
-      // add latest form data
-      formData.episodes = episode
+    // push genre
+    ref.current.getSelectedItems().forEach((element) => {
+      formData.genre.push(element.name)
+    })
+    // add latest form data
+    formData.episodes = episode
+    formData._id = movieId
 
-      console.log(formData)
-    }
+    dispatch(updateMovie(formData))
+    navigate('/')
   }
 
   const handleOnChange = (e) => {
-    if (e.target.type === 'file') {
-      const objectUrl = URL.createObjectURL(e.target.files[0])
-      setImage(objectUrl)
-      setFileImage(e.target.files[0])
-      // console.log(e.target.files[0])
-      setFormData({
-        title: document.getElementById('title').value,
-        type: document.getElementById('type').value,
-        country: document.getElementById('country').value,
-        genre: [],
-        episodes: [],
-        description: document.getElementById('description').value,
-        imageUrl: '',
-      })
-    } else {
-      setFormData({
-        title: document.getElementById('title').value,
-        type: document.getElementById('type').value,
-        country: document.getElementById('country').value,
-        genre: [],
-        episodes: [],
-        description: document.getElementById('description').value,
-        imageUrl: movie.imageUrl,
-      })
-    }
+    setFormData({
+      title: document.getElementById('title').value,
+      type: document.getElementById('type').value,
+      country: document.getElementById('country').value,
+      genre: [],
+      episodes: [],
+      description: document.getElementById('description').value,
+      imageUrl: movie.imageUrl,
+    })
   }
 
   const onEpChange = (e) => {
@@ -188,12 +160,6 @@ const EditMovie = () => {
       })
     )
     console.log(episode)
-  }
-
-  const handleImageChange = (e) => {
-    const objectUrl = URL.createObjectURL(e.target.files[0])
-    setImage(objectUrl)
-    setFileImage(e.target.files[0])
   }
 
   return (
@@ -319,25 +285,12 @@ const EditMovie = () => {
               display: 'grid',
             }}
           >
-            <div className='d-flex justify-content-between'>
-              <label
-                className='uppercase md:text-sm text-xs text-gray-500 font-semibold mb-1'
-                style={{ textTransform: 'uppercase', fontWeight: '500' }}
-              >
-                Upload Movie Image
-              </label>
-              {image && (
-                <svg
-                  className='hover'
-                  style={{ width: '1.25rem' }}
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 448 512'
-                  onClick={(e) => setImage('')}
-                >
-                  <path d='M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm79 143c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z' />
-                </svg>
-              )}
-            </div>
+            <label
+              className='uppercase md:text-sm text-xs text-gray-500 font-semibold mb-1'
+              style={{ textTransform: 'uppercase', fontWeight: '500' }}
+            >
+              Upload Movie Image
+            </label>
             <div
               className='d-flex justify-content-center justify-center w-full'
               style={{ width: '100%', alignItems: 'center' }}
@@ -350,45 +303,11 @@ const EditMovie = () => {
                   width: '100%',
                 }}
               >
-                {image || movie.imageUrl ? (
-                  <img
-                    className='h-full'
-                    src={image || movie.imageUrl}
-                    alt='zz'
-                    style={{ height: '100%', width: '100%' }}
-                  />
-                ) : (
-                  <div className='d-flex flex-column align-items-center justify-content-center pt-24 hover:cursor-pointer'>
-                    <svg
-                      className='w-10 h-10 text-green-400 group-hover:text-green-600 '
-                      style={{
-                        width: '2.5rem',
-                        height: '2.5rem',
-                        color: '#396EC6',
-                      }}
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-                      />
-                    </svg>
-                    <p className='lowercase text-sm text-gray-400 group-hover:text-green-600 pt-1 tracking-wider'>
-                      select a photo
-                    </p>
-                  </div>
-                )}
-                <input
-                  type='file'
-                  className='hidden'
-                  style={{ display: 'none' }}
-                  accept='.jpg,.png,.jpeg'
-                  onChange={handleOnChange}
+                <img
+                  className='h-full'
+                  src={image || movie.imageUrl}
+                  alt='zz'
+                  style={{ height: '100%', width: '100%' }}
                 />
               </label>
             </div>
