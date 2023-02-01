@@ -195,7 +195,7 @@ const Header = () => {
               <Link to='/login'>
                 <button
                   type='button'
-                  className='btn btn-outline-light py-2 fw-bold ms-1'
+                  className='btn btn-outline-light py-2 fw-bold'
                   data-mdb-ripple-color='dark'
                 >
                   Log In

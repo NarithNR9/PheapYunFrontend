@@ -67,13 +67,21 @@ const Explore = () => {
       }
     } else if (e.target.parentNode.id === 'country') {
       if (e.target.innerText !== 'All') {
-        filter[1] = e.target.innerText
+        if (e.target.innerText === 'HongKong') {
+          filter[1] = 'Hong Kong'
+        } else {
+          filter[1] = e.target.innerText
+        }
       } else {
         filter[1] = ''
       }
     } else if (e.target.parentNode) {
       if (e.target.innerText !== 'All') {
-        filter[2] = e.target.innerText
+        if (e.target.innerText === 'SciFi') {
+          filter[2] = 'Sci-Fi'
+        } else {
+          filter[2] = e.target.innerText
+        }
       } else {
         filter[2] = ''
       }
@@ -162,7 +170,7 @@ const Explore = () => {
           type='button'
           className='btn btn-outline-primary me-2 px-3 btn-rounded'
         >
-          Hong Kong
+          HongKong
         </button>
         <button
           onClick={handleClick}
@@ -179,7 +187,7 @@ const Explore = () => {
           Korea
         </button>
       </div>
-      <div className='hideScrollX my-2 d-flex overflow-x-auto' id='genre'>
+      <div className='hideScrollX my-2 d-flex  overflow-x-auto' id='genre'>
         <button
           onClick={handleClick}
           type='button'
@@ -261,8 +269,9 @@ const Explore = () => {
           onClick={handleClick}
           type='button'
           className='btn btn-outline-primary me-2 px-3 btn-rounded'
+          style={{ width: '100px' }}
         >
-          Sci-Fi
+          SciFi
         </button>
         <button
           onClick={handleClick}
