@@ -52,7 +52,7 @@ const MovieDetail = () => {
       const favo = favourites.map((ele) => {
         return { movieId: ele._id }
       })
-      favo.push({ movieId: movieId })
+      favo.unshift({ movieId: movieId })
       const data = { email: user.email, favourite: favo }
       setFav(true)
       dispatch(updateFavourite(data))

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaBars, FaSearch, FaUserCircle } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,8 +8,6 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user, isAdmin } = useSelector((state) => state.auth)
-
-  const { searchName, setSearchName } = useState('')
 
   if (window.location.pathname === '/Explore') {
     // document.getElementById('navType').click()
@@ -113,87 +111,98 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-          <form onSubmit={search} className='d-flex' role='search'>
-              <FaSearch onClick={search} className='mt-1 me-1 hover' color='white' size={'30px'} />
-            <input
-              id='search'
-              className='form-control me-2'
-              type='search'
-              placeholder='Search'
-              aria-label='Search'
-            />
-          </form>
-          {user !== null ? (
-            <div className='dropdown ms-3 mb-1'>
-              <a
-                className='dropdown-toggle d-flex align-items-center hidden-arrow'
-                href='#a'
-                id='navbarDropdownMenuAvatar'
-                role='button'
-                data-mdb-toggle='dropdown'
-                aria-expanded='false'
-              >
-                {!user.imageUrl ? (
-                  <FaUserCircle color='white' size={'30px'} />
-                ) : (
-                  <img
-                    src={user.imageUrl}
-                    className='rounded-circle'
-                    height='33'
-                    alt='Profile'
-                    loading='lazy'
-                  />
-                )}
-              </a>
-              <ul
-                className='dropdown-menu dropdown-menu-end'
-                aria-labelledby='navbarDropdownMenuAvatar'
-              >
-                <li>
-                  <div className='d-flex mt-2 align-items-center justify-content-center fw-bold text-capitalize'>
-                    {!user.imageUrl ? (
-                      <FaUserCircle className='me-1 ' color='' size={'30px'} />
-                    ) : (
-                      <img
-                        src={user.imageUrl}
-                        className='rounded-circle me-1'
-                        height='45'
-                        alt='Profile'
-                        loading='lazy'
-                      />
-                    )}
-                    {user.username}
-                  </div>
-                </li>
-                <hr />
-                <li>
-                  <Link className='dropdown-item' to='/myProfile'>
-                    My profile
-                  </Link>
-                </li>
-                <li>
-                  <Link className='dropdown-item' to='/favourite'>
-                    My Favourite
-                  </Link>
-                </li>
-                <li onClick={onLogout}>
-                  <a className='dropdown-item' href='#a'>
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </div>
-          ) : (
-            <Link to='/login'>
-              <button
-                type='button'
-                className='btn btn-outline-light py-2 fw-bold ms-1'
-                data-mdb-ripple-color='dark'
-              >
-                Log In
-              </button>
-            </Link>
-          )}
+          <div className='d-flex justify-content-between'>
+            <form onSubmit={search} className='d-flex' role='search'>
+              <FaSearch
+                onClick={search}
+                className='mt-1 me-1 hover'
+                color='white'
+                size={'30px'}
+              />
+              <input
+                id='search'
+                className='form-control me-2'
+                type='search'
+                placeholder='Search'
+                aria-label='Search'
+              />
+            </form>
+            {user !== null ? (
+              <div className='dropdown pf ms-3 mb-1'>
+                <a
+                  className='dropdown-toggle d-flex align-items-center hidden-arrow'
+                  href='#a'
+                  id='navbarDropdownMenuAvatar'
+                  role='button'
+                  data-mdb-toggle='dropdown'
+                  aria-expanded='false'
+                >
+                  {!user.imageUrl ? (
+                    <FaUserCircle color='white' size={'30px'} />
+                  ) : (
+                    <img
+                      src={user.imageUrl}
+                      className='rounded-circle'
+                      height='33'
+                      alt='Profile'
+                      loading='lazy'
+                    />
+                  )}
+                </a>
+                <ul
+                  className='dropdown-menu dropdown-menu-end'
+                  aria-labelledby='navbarDropdownMenuAvatar'
+                >
+                  <li>
+                    <div className='d-flex mt-2 align-items-center justify-content-center fw-bold text-capitalize'>
+                      {!user.imageUrl ? (
+                        <FaUserCircle
+                          className='me-1 '
+                          color=''
+                          size={'30px'}
+                        />
+                      ) : (
+                        <img
+                          src={user.imageUrl}
+                          className='rounded-circle me-1'
+                          height='45'
+                          alt='Profile'
+                          loading='lazy'
+                        />
+                      )}
+                      {user.username}
+                    </div>
+                  </li>
+                  <hr />
+                  <li>
+                    <Link className='dropdown-item' to='/myProfile'>
+                      My profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className='dropdown-item' to='/favourite'>
+                      My Favourite
+                    </Link>
+                  </li>
+                  <li onClick={onLogout}>
+                    <a className='dropdown-item' href='#a'>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to='/login'>
+                <button
+                  type='button'
+                  className='btn btn-outline-light py-2 fw-bold ms-1'
+                  data-mdb-ripple-color='dark'
+                >
+                  Log In
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>
