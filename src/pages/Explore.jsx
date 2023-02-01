@@ -30,9 +30,9 @@ const Explore = () => {
 
   useEffect(
     (e) => {
-      if (isSuccess) {
-        dispatch(reset())
-      }
+      // if (isSuccess) {
+      //   dispatch(reset())
+      // }
 
       const query = new URLSearchParams(location.search)
       const typePara = query.get('type')
@@ -52,7 +52,9 @@ const Explore = () => {
         // dispatch(getByFilter([typePara, countryPara, genrePara]))
         navigate('/Explore')
       } else {
-        dispatch(getLatestMovies())
+        if (!movies) {
+          dispatch(getLatestMovies())
+        }
       }
     },
     [navigate]

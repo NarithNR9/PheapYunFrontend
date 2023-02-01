@@ -35,7 +35,7 @@ const Home = () => {
 
     if (user) {
       axios
-        .get('https://pheapyun.onrender.com/user/favourite/' + user.email)
+        .get('https://pheapyun.cyclic.app/user/favourite/' + user.email)
         .then((movies) => {
           setFavourite(movies.data.favourite)
         })
@@ -44,7 +44,7 @@ const Home = () => {
 
     axios
       .get(
-        'https://pheapyun.onrender.com/movie/Explore?type=&country=Hong Kong&genre=&title='
+        'https://pheapyun.cyclic.app/movie/Explore?type=&country=Hong Kong&genre=&title='
       )
       .then((movies) => {
         setHK(movies.data.movies)
@@ -53,7 +53,7 @@ const Home = () => {
 
     axios
       .get(
-        'https://pheapyun.onrender.com/movie/Explore?type=&country=Cambodia&genre=&title='
+        'https://pheapyun.cyclic.app/movie/Explore?type=&country=Cambodia&genre=&title='
       )
       .then((movies) => {
         setMov(movies.data.movies)
@@ -62,7 +62,7 @@ const Home = () => {
 
     axios
       .get(
-        'https://pheapyun.onrender.com/movie/Explore?type=Anime&country=&genre=&title='
+        'https://pheapyun.cyclic.app/movie/Explore?type=Anime&country=&genre=&title='
       )
       .then((movies) => {
         setAnime(movies.data.movies)
@@ -71,7 +71,7 @@ const Home = () => {
 
     axios
       .get(
-        'https://pheapyun.onrender.com/movie/Explore?type=&country=&genre=Comedy&title='
+        'https://pheapyun.cyclic.app/movie/Explore?type=&country=&genre=Comedy&title='
       )
       .then((movies) => {
         setComedy(movies.data.movies)
