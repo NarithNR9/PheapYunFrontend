@@ -86,7 +86,7 @@ const SlickSection = ({ title, moviesProp,url }) => {
           <FaAngleRight />
         </h4>
       </Link>
-      {isLoading ? (
+      {moviesProp.length === 0 ? (
         <Loading size='150px' />
       ) : (
         <Slider {...setting}>

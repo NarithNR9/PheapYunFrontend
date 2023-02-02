@@ -40,6 +40,9 @@ const MovieDetail = () => {
   }, [movieId, user?.email])
 
   useEffect(() => {
+    if (movie.genre) {
+      console.log(movie.episodes[2])
+    }
     // Run! once
     if (Array.isArray(favourite)) {
       setFav(favourite?.some((ele) => ele._id === movieId))
@@ -179,12 +182,11 @@ const MovieDetail = () => {
 
             <div className=''>
               <h6>EPISODES</h6>
-              {/* {movie.genre?.length} */}
               {movie.episodes?.map((key) => (
                 <button
                   key={key.ep}
                   type='button'
-                  className='btn btn-light m-2 p-0 py-1'
+                  className={(movie.episodes[key.ep - 1].url === movieUrl) ? 'btn btn-info m-2 p-0 py-1' : 'btn btn-light m-2 p-0 py-1'}
                   style={{ width: '3rem' }}
                   onClick={() => {
                     setMovieUrl(key.url)
