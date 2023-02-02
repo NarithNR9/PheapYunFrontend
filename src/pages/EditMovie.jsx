@@ -91,7 +91,7 @@ const EditMovie = () => {
     // }
 
     // dispatch(reset())
-  }, [isError, isSuccess, uploadSuccess])
+  }, [isError, isSuccess, uploadSuccess,movie])
 
   const handleSubmit = (e) => {
     e.preventDefault()
