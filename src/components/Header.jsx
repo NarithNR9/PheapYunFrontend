@@ -112,21 +112,23 @@ const Header = () => {
             </li>
           </ul>
           <div className='d-flex justify-content-between'>
-            <form onSubmit={search} className='d-flex' role='search'>
-              <FaSearch
-                onClick={search}
-                className='mt-1 me-1 hover'
-                color='white'
-                size={'30px'}
-              />
-              <input
-                id='search'
-                className='form-control me-2'
-                type='search'
-                placeholder='Search'
-                aria-label='Search'
-              />
-            </form>
+            {user && (
+              <form onSubmit={search} className='d-flex' role='search'>
+                <FaSearch
+                  onClick={search}
+                  className='mt-1 me-1 hover'
+                  color='white'
+                  size={'30px'}
+                />
+                <input
+                  id='search'
+                  className='form-control me-2'
+                  type='search'
+                  placeholder='Search'
+                  aria-label='Search'
+                />
+              </form>
+            )}
             {user !== null ? (
               <div className='dropdown pf ms-3 mb-1'>
                 <a
