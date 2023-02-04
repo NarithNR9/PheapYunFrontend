@@ -61,7 +61,7 @@ const Header = () => {
                 Home
               </Link>
             </li>
-            {isAdmin && (
+            {(isAdmin && user) && (
               <li className='nav-item'>
                 <Link className='nav-link text-light' to='/add-movies'>
                   Add
