@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://pheapyun.cyclic.app/movie/'
+const API_URL = 'https://pheapyun.nr99.me/movie/'
 const API_USER = 'https://pheapyun.cyclic.app/user/'
 const API_Cloudinary = 'https://api.cloudinary.com/v1_1/dzh7xzbbz/image/upload'
 
